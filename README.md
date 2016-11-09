@@ -11,8 +11,7 @@ Using Serge Zaitsev's [awesome jsmn JSON parsing library][jsmn], supported by [t
 Features
 --------
 
-* compatible with C89
-* highly portable (tested on x86/amd64, ARM, AVR)
+* portable (tested on x86, ARM)
 * small code footprint
 
 Install
