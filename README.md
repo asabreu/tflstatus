@@ -1,6 +1,6 @@
 # tflstatus
 
-An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX console.
+An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX terminal.
 
 Using Serge Zaitsev's [awesome jsmn JSON parsing library][jsmn], supported by [the cURL project's libcurl][libcurl]. 
 
