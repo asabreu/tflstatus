@@ -8,7 +8,6 @@
 #include "buf.h"
 
 char URL[] = "https://api.tfl.gov.uk/line/mode/tube/status?detail=true";
-char *KEYS[] = { "id", "name", "modeName", "lineStatuses" };
 
 int main(void)
 {
@@ -16,38 +15,48 @@ int main(void)
 
     jsmntok_t *tokens = json_tokenise(js);
 
-    typedef enum { START, KEY, PRINT, SKIP, STOP } parse_state;
-    parse_state state = START;
+    //typedef enum { START, OBJECT, KEY, PRINT, SKIP, STOP } parse_state;
+    //parse_state state = START;
 
     size_t object_tokens = 0;
 
-    for (size_t i = 0, j = 1; j > 0; i++, j--)
+	for (size_t i = 0; i < JSON_TOKENS; i++)
+    //for (size_t i = 0, j = 1; j > 0; i++, j--)
     {
         jsmntok_t *t = &tokens[i];
 
         // Should never reach uninitialized tokens
         log_assert(t->start != -1 && t->end != -1);
 
-        if (t->type == JSMN_ARRAY || t->type == JSMN_OBJECT)
-            j += t->size;
+        //if (t->type == JSMN_ARRAY || t->type == JSMN_OBJECT)
+        //    j += t->size;
+ 	
+ 		printf("type: %u\n", t->type);
+	
+ 		if (t->type == JSMN_STRING && json_token_streq(js, t, "id")) {
+			char *key = json_token_tostr(js, t);
+	    	printf("\ntoken:%s\n", key);
 
+			jsmntok_t *tv = &tokens[i+1];
+			char *value = json_token_tostr(js, tv);
+			printf("value:%s\n", value);
+         
+          	object_tokens = t->size;
+          	printf("tokens: %zu\n", object_tokens);	
+		}
+
+/*
         switch (state)
         {
             case START:
-				if (t->type == JSMN_UNDEFINED)
-					log_die("Invalid response: root element is undefined.");
-
-                if (t->type != JSMN_OBJECT)
-                	log_die("Invalid response: root element must be an object.");
+                if (t->type != JSMN_ARRAY)
+                	log_die("Invalid response: root element must be an array.");
 
                 state = KEY;
                 object_tokens = t->size;
 
                 if (object_tokens == 0)
                     state = STOP;
-
-                if (object_tokens % 2 != 0)
-                    log_die("Invalid response: object must have even number of children.");
 
                 break;
 
@@ -105,6 +114,7 @@ int main(void)
             default:
                 log_die("Invalid state %u", state);
         }
+*/
     }
 
     return 0;

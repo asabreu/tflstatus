@@ -25,7 +25,7 @@
 #include <string.h>
 
 /* json-c (https://github.com/json-c/json-c) */
-#include <json-c/json.h>
+#include <json.h> 
 
 /* libcurl (http://curl.haxx.se/libcurl/c) */
 #include <curl/curl.h>

@@ -6,7 +6,6 @@
 #include "buf.h"
 
 #define BUFFER_SIZE 32768
-#define JSON_TOKENS 256
 
 static size_t fetch_data(void *buffer, size_t size, size_t nmemb, void *userp)
 {
@@ -34,7 +33,7 @@ char * json_fetch(char *url)
     buf_t *buf = buf_size(NULL, BUFFER_SIZE);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fetch_data);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, buf);
-    curl_easy_setopt(curl, CURLOPT_USERAGENT, "jsmn-example (https://github.com/alisdair/jsmn-example, alisdair@mcdiarmid.org)");
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "tflstatus");
 
     struct curl_slist *hs = curl_slist_append(NULL, "Accept: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, hs);
