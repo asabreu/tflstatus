@@ -2,10 +2,10 @@
 
 An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX terminal.
 
-Using Serge Zaitsev's [awesome jsmn JSON parsing library][jsmn], supported by [the cURL project's libcurl][libcurl]. 
+Using [awesome json-c parsing library][json-c], supported by [the cURL project's libcurl][libcurl]. 
 
 [tfl]: https://api.tfl.gov.uk/line/mode/tube/status?detail=true
-[jsmn]: https://github.com/zserge/jsmn
+[json-c]: https://github.com/json-c/json-c
 [libcurl]: http://curl.haxx.se/libcurl/
 
 Features
