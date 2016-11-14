@@ -2,7 +2,10 @@
 
 An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX terminal.
 
-Using [awesome json-c parsing library][json-c], supported by [the cURL project's libcurl][libcurl]. 
+Dependencies
+------------
+* [json-c parsing library][json-c]
+* [cURL project's libcurl][libcurl] 
 
 [tfl]: https://api.tfl.gov.uk/line/mode/tube/status?detail=true
 [json-c]: https://github.com/json-c/json-c
