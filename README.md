@@ -2,6 +2,8 @@
 
 An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX terminal.
 
+![Screen Shot](screenShot.png)
+
 Dependencies
 ------------
 * [json-c parsing library][json-c]

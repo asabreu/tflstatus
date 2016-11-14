@@ -4,6 +4,7 @@
 
 /* application includes */
 #include "parse.h"
+#include "line.h"
   
 /* json-c (https://github.com/json-c/json-c) */
 #include <json.h>
@@ -54,7 +55,7 @@ void print_json_value(struct json_object *jobj) {
 			int value = json_object_get_int(jobj);
         	//printf("value: %d\n", value); 
        		if (field == STATUSSEVERITY) { 
-				printf("StatusSeverity: %d\n", value);
+				setStatusSeverity(value);
 			} 	
 		}
 		   break;
@@ -66,19 +67,21 @@ void print_json_value(struct json_object *jobj) {
 
 			if (field == TYPE) {
  				if (strncmp("Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities", value, strlen(value)) == 0) {
+					addLine();
 					isInLine = true;
 					isInLineStatuses = false;
-					printf("--------------------\n");
  				}			
 			
 			} else if (field == ID) {
-				printf("Id: %s\n", value); 
+				setId((char *)value);
 			} else if (field == NAME) {
-				printf("Name: %s\n", value); 
+				setName((char *)value);
 			} else if (field == STATUSSEVERITYDESCRIPTION) {
-				printf("StatusSeverityDescription: %s\n", value); 
+				setStatusSeverityDescription((char *)value);
 			} else if (field == REASON) {
-				printf("Reason: %s\n", value);
+				if (value != NULL) {
+					setReason((char *)value);
+				}
 			}
 		} 
 			break;

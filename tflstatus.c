@@ -25,6 +25,7 @@
 /* application includes */
 #include "fetch.h"
 #include "parse.h"
+#include "display.h"
 
 /* json-c (https://github.com/json-c/json-c) */
 #include <json.h> 
@@ -113,6 +114,12 @@ int main(int argc, char *argv[]) {
 
 	/* parse */
 	json_parse(json);
+
+	/* display */
+	int l;
+	for	(l = 0; l < KNUMBEROFLINES; l++) {
+		displayLineStatus(&lines[l]);	
+	}
 
     /* exit */
     return 0;

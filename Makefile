@@ -6,7 +6,7 @@ CFLAGS+=-Wall -Werror -std=gnu99 -O2
 LDFLAGS+=`curl-config --libs`
 
 TARGETS=tflstatus
-OBJS=fetch.o parse.o
+OBJS=fetch.o parse.o line.o display.o
 
 all: $(TARGETS)
 
