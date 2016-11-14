@@ -9,13 +9,16 @@
 #include <json.h>
 
 /* forward Declaration */
+void print_json_value(struct json_object *jobj);
+void json_parse_array(struct json_object *jobj, char *key);
+void json_parse(struct json_object *jobj);
 void stateUpdate(char *key);
 
 typedef enum {
 	TYPE,
 	ID, NAME,
-  	STATUSSEVERITY, STATUSSEVERITYDESCRIPTION, REASON,
-    SKIP
+	STATUSSEVERITY, STATUSSEVERITYDESCRIPTION, REASON,
+	SKIP
 } parse_field;
 
 /* the current field of the parser */
@@ -85,7 +88,6 @@ void print_json_value(struct json_object *jobj) {
 void json_parse_array(struct json_object *jobj, char *key) {
  	//printf(">>> json_parse_array\n"); 
 
-	void json_parse(struct json_object *jobj); /* forward Declaration */
 	enum json_type type;
 
 	struct json_object *jarray = jobj; /* simply get the array */
@@ -173,7 +175,6 @@ void stateUpdate(char *key) {
 
 	if (strncmp("$type", key, strlen(key)) == 0) {
 		field = TYPE;
-		return;
 	}
 
 	if (isInLine == true && isInLineStatuses == false) {
@@ -183,7 +184,6 @@ void stateUpdate(char *key) {
 			field = NAME;
 		} else if (strncmp("lineStatuses", key, strlen(key)) == 0) {
 			isInLineStatuses = true;
-			return;	
 		}
 	
 	} else if (isInLine == true && isInLineStatuses == true) { 
