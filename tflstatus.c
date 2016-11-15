@@ -33,7 +33,42 @@
 /* libcurl (http://curl.haxx.se/libcurl/c) */
 #include <curl/curl.h>
 
+int isCmdValid(char *cmd) {
+	if (strncmp("--help", cmd, strlen(cmd)) == 0 || strncmp("help", cmd, strlen(cmd)) == 0) {
+		return 1;
+	}
+
+	return 0;
+}
+
 int main(int argc, char *argv[]) {
+
+	if (argc != 1) {
+		if (argc != 2) {
+			int i;
+    		printf("tflstatus: The following are not valid commands. See 'tflstatus --help'.\n");
+    		for (i = 1; i < argc; i++) {
+				char *cmd = argv[i];
+				if (!isCmdValid(cmd))
+					printf("'%s' ", argv[i]);
+			}
+			printf("\n");
+		
+		} else {
+			char *cmd = argv[1];
+			if (isCmdValid(cmd)) {
+				printf("usage: %s [--version]\n", argv[0]);
+			} else if (strncmp("--version", cmd, strlen(cmd)) == 0) {
+				printf("%s version %s\n", argv[0], "???");
+			} else {
+				printf("tflstatus: '%s' is not a tflstatus command. See 'tflstatus --help'.\n", cmd);
+				printf("usage: %s [--version]\n", argv[0]);
+			}
+		}
+
+		return 0;
+    }
+
     CURL *ch;                                               /* curl handle */
     CURLcode rcode;                                         /* curl result code */
 
