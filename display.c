@@ -29,6 +29,7 @@
 /* forward declaration */
 char *centerStr(char *str);
 char *repeatStr(char *str, size_t count);
+void str_replace(char *target, const char *needle, const char *replacement);
 
 void displayDateTime() {
 	time_t timer;
@@ -72,12 +73,20 @@ void displayLineStatus(struct line_st *line) {
 		printf("%s", name);	
 	}
 	
-	if (line->statusSeverity != 10) {
+	if (line->statusSeverity != 10) { /* 10 = Good Service */
 		printf(KRED "\t%s" KRESET, line->statusSeverityDescription);
 		printf("\n");
 	} else {
 		printf("\t%s\n", line->statusSeverityDescription);
 	}
+
+	/* remove mention of the line in the reason to make it shorter */
+	/*
+	char original[1024] = "Metropolitan Line: BlaBlaBlaBla";                         
+	printf("Before: %s\n", original);
+	str_replace(original, "Metropolitan Line: ", "");
+	printf("After: %s\n", original);
+	*/
 	
 	if (line->reason != NULL) {
 		printf(KREASON "\t%s" KRESET, line->reason);
@@ -126,4 +135,36 @@ char *repeatStr(char *str, size_t count) {
     }
 
     return ret;
+}
+
+void str_replace(char *target, const char *needle, const char *replacement) {
+	char buffer[2048] = { 0 };
+	char *insert_point = &buffer[0];
+	const char *tmp = target;
+	size_t needle_len = strlen(needle);
+	size_t repl_len = strlen(replacement);
+
+	while (1) {
+		const char *p = strstr(tmp, needle);
+
+		// walked past last occurrence of needle; copy remaining part
+		if (p == NULL) {
+			strcpy(insert_point, tmp);
+			break;
+		}
+
+		// copy part before needle
+		memcpy(insert_point, tmp, p - tmp);
+		insert_point += p - tmp;
+
+		// copy replacement string
+		memcpy(insert_point, replacement, repl_len);
+		insert_point += repl_len;
+
+		// adjust pointers, move on
+		tmp = p + needle_len;
+	}
+
+	// write altered string back to target
+	strcpy(target, buffer);
 }
