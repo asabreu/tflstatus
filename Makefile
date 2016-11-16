@@ -1,6 +1,5 @@
-JSON_C_DIR=/usr/local/Cellar/json-c/0.12
-CFLAGS+=-I$(JSON_C_DIR)/include/json-c
-LDFLAGS+=-L$(JSON_C_DIR)/lib -ljson-c
+CFLAGS+=$(shell pkg-config --cflags json-c)
+LDFLAGS+=$(shell pkg-config --libs json-c)
 
 CFLAGS+=-Wall -Werror -std=gnu99 -O2 
 LDFLAGS+=`curl-config --libs`
