@@ -4,6 +4,7 @@
 #include <string.h>
 #include <memory.h>
 #include <time.h>
+#include <ctype.h>
 
 /* application includes */
 #include "display.h"
@@ -30,8 +31,11 @@
 char *centerStr(char *str);
 char *repeatStr(char *str, size_t count);
 void str_replace(char *target, const char *needle, const char *replacement);
+void convertToUpperCase(char *str);
 
 void displayDateTime() {
+	printf("\n"); /* add blank header line for additional spacing */ 
+
 	time_t timer;
 	char buffer[26];
 	struct tm* tm_info;
@@ -81,15 +85,21 @@ void displayLineStatus(struct line_st *line) {
 	}
 
 	/* remove mention of the line in the reason to make it shorter */
-	/*
-	char original[1024] = "Metropolitan Line: BlaBlaBlaBla";                         
-	printf("Before: %s\n", original);
-	str_replace(original, "Metropolitan Line: ", "");
-	printf("After: %s\n", original);
-	*/
-	
 	if (line->reason != NULL) {
-		printf(KREASON "\t%s" KRESET, line->reason);
+		/* lower case */
+		char *suffix = " Line: ";
+		char *needle = (char *) malloc(1 + strlen(line->name) + strlen(suffix));
+		strcpy(needle, line->name);
+		strcat(needle, suffix);
+
+		char *original = line->reason;
+		str_replace(original, needle, "");  
+		
+		/* upper case */
+		convertToUpperCase(needle);		
+		str_replace(original, needle, "");
+
+		printf(KREASON "\t%s" KRESET, original);
 		printf("\n");
 	}
 }
@@ -147,24 +157,32 @@ void str_replace(char *target, const char *needle, const char *replacement) {
 	while (1) {
 		const char *p = strstr(tmp, needle);
 
-		// walked past last occurrence of needle; copy remaining part
+		/* walked past last occurrence of needle; copy remaining part */
 		if (p == NULL) {
 			strcpy(insert_point, tmp);
 			break;
 		}
 
-		// copy part before needle
+		/* copy part before needle */
 		memcpy(insert_point, tmp, p - tmp);
 		insert_point += p - tmp;
 
-		// copy replacement string
+		/* copy replacement string */
 		memcpy(insert_point, replacement, repl_len);
 		insert_point += repl_len;
 
-		// adjust pointers, move on
+		/* adjust pointers, move on */
 		tmp = p + needle_len;
 	}
 
-	// write altered string back to target
+	/* write altered string back to target */
 	strcpy(target, buffer);
+}
+
+void convertToUpperCase(char *str) {
+	while (*str != '\0') {
+		if (islower(*str))
+			*str = toupper((unsigned char) *str);
+		++str;
+	}
 }

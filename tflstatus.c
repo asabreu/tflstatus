@@ -159,6 +159,8 @@ int main(int argc, char *argv[]) {
 	for	(l = 0; l < KNUMBEROFLINES; l++) {
 		displayLineStatus(&lines[l]);	
 	}
+	
+	printf("\n"); /* add blank footer line for additional spacing */
 
     /* exit */
     return 0;
