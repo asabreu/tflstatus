@@ -9,18 +9,18 @@
 
 #define KBAKERLOO		"\033[38;5;231;48;5;94m"
 #define KCENTRAL		"\033[38;5;231;48;5;160m"
-#define KCIRCLE			"\033[38;5;231;48;5;220m"
+#define KCIRCLE			"\033[38;5;16;48;5;220m"
 #define KDISTRICT		"\033[38;5;231;48;5;22m"
-#define KHAMMERSMITH	"\033[38;5;231;48;5;175m"
-#define KJUBILEE	    "\033[38;5;231;48;5;102m"
+#define KHAMMERSMITH	"\033[38;5;16;48;5;175m"
+#define KJUBILEE		"\033[38;5;231;48;5;102m"
 #define KMETROPOLITAN	"\033[38;5;231;48;5;89m"
-#define KNORTHEN	    "\033[38;5;231;48;5;16m"
-#define KPICCADILLY	    "\033[38;5;231;48;5;19m"
-#define KVICTORIA		"\033[38;5;231;48;5;38m"
-#define KWATERLOO	    "\033[38;5;231;48;5;115m"
+#define KNORTHEN		"\033[38;5;231;48;5;16m"
+#define KPICCADILLY		"\033[38;5;231;48;5;19m"
+#define KVICTORIA		"\033[38;5;16;48;5;38m"
+#define KWATERLOO		"\033[38;5;16;48;5;115m"
 
 #define KRESET			"\033[m"
-#define KREASON 		"\x1B[33m" /* light yellow */
+#define KREASON			"\x1B[33m" /* light yellow */
 
 #define KLINENAMEWIDTH	20
 
