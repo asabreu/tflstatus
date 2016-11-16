@@ -151,6 +151,8 @@ int main(int argc, char *argv[]) {
 	json_parse(json);
 
 	/* display */
+	displayDateTime();
+	
 	int l;
 	for	(l = 0; l < KNUMBEROFLINES; l++) {
 		displayLineStatus(&lines[l]);	

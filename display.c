@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <memory.h>
+#include <time.h>
 
 /* application includes */
 #include "display.h"
@@ -27,6 +28,18 @@
 /* forward declaration */
 char *centerStr(char *str);
 char *repeatStr(char *str, size_t count);
+
+void displayDateTime() {
+	time_t timer;
+	char buffer[26];
+	struct tm* tm_info;
+	
+	time(&timer);
+	tm_info = localtime(&timer);
+
+	strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
+	puts(buffer);
+}
 
 void displayLineStatus(struct line_st *line) {
 	char *id = line->id;
