@@ -22,6 +22,7 @@
 
 #define KRESET			"\033[m"
 #define KREASON			"\x1B[33m" /* light yellow */
+#define KRED			"\x1B[31m"
 
 #define KLINENAMEWIDTH	20
 
@@ -71,10 +72,15 @@ void displayLineStatus(struct line_st *line) {
 		printf("%s", name);	
 	}
 	
-	printf("\t%s\n", line->statusSeverityDescription);
+	if (line->statusSeverity != 10) {
+		printf(KRED "\t%s" KRESET, line->statusSeverityDescription);
+		printf("\n");
+	} else {
+		printf("\t%s\n", line->statusSeverityDescription);
+	}
 	
 	if (line->reason != NULL) {
-		printf(KREASON "%s" KRESET, line->reason);
+		printf(KREASON "\t%s" KRESET, line->reason);
 		printf("\n");
 	}
 }
