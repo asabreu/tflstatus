@@ -33,6 +33,8 @@
 /* libcurl (http://curl.haxx.se/libcurl/c) */
 #include <curl/curl.h>
 
+const char *VERSION = "1.0";
+
 int isCmdValid(char *cmd) {
 	if (strncmp("--help", cmd, strlen(cmd)) == 0 || strncmp("help", cmd, strlen(cmd)) == 0) {
 		return 1;
@@ -59,7 +61,7 @@ int main(int argc, char *argv[]) {
 			if (isCmdValid(cmd)) {
 				printf("usage: %s [--version]\n", argv[0]);
 			} else if (strncmp("--version", cmd, strlen(cmd)) == 0) {
-				printf("%s version %s\n", argv[0], "???");
+				printf("%s version %s\n", argv[0], VERSION);
 			} else {
 				printf("tflstatus: '%s' is not a tflstatus command. See 'tflstatus --help'.\n", cmd);
 				printf("usage: %s [--version]\n", argv[0]);
