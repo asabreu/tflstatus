@@ -99,7 +99,8 @@ void displayLineStatus(struct line_st *line) {
 		convertToUpperCase(needle);		
 		str_replace(original, needle, "");
 
-		printf(KREASON "\t%s" KRESET, original);
+		char *emptyStr = repeatStr(" ", KLINENAMEWIDTH);
+		printf(KREASON "\%s\t%s" KRESET, emptyStr, original);
 		printf("\n");
 	}
 }
