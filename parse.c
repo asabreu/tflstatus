@@ -5,15 +5,15 @@
 /* application includes */
 #include "parse.h"
 #include "line.h"
-  
+
 /* json-c (https://github.com/json-c/json-c) */
 #include <json.h>
 
 /* forward Declaration */
-void print_json_value(struct json_object *jobj);
-void json_parse_array(struct json_object *jobj, char *key);
-void json_parse(struct json_object *jobj);
-void stateUpdate(char *key);
+void print_json_value(struct json_object * jobj);
+void json_parse_array(struct json_object * jobj, char * key);
+void json_parse(struct json_object * jobj);
+void state_update(char * key);
 
 typedef enum {
 	TYPE,
@@ -27,12 +27,12 @@ parse_field field = SKIP;
 
 /* state flags */
 typedef enum { false, true } bool;
-bool isInLine = false;
-bool isInLineStatuses = false;
+bool is_in_line = false;
+bool is_in_line_statuses = false;
 
 /* printing the value corresponding to boolean, double, integer and strings */
 void print_json_value(struct json_object *jobj) {
- 	//printf(">>> print_json_value\n"); 
+ 	//printf(">>> print_json_value\n");
 
 	enum json_type type = json_object_get_type(jobj); /* getting the type of the json object */
 	//printf("type: %u\n", type);
@@ -53,43 +53,43 @@ void print_json_value(struct json_object *jobj) {
     	case json_type_int:
 		{
 			int value = json_object_get_int(jobj);
-        	//printf("value: %d\n", value); 
-       		if (field == STATUSSEVERITY) { 
-				setStatusSeverity(value);
-			} 	
+        	//printf("value: %d\n", value);
+       		if (field == STATUSSEVERITY) {
+				set_status_severity(value);
+			}
 		}
 		   break;
 
     	case json_type_string:
 		{
 			const char *value = json_object_get_string(jobj);
-        	//printf("value: %s\n", value); 
+        	//printf("value: %s\n", value);
 
 			if (field == TYPE) {
  				if (strncmp("Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities", value, strlen(value)) == 0) {
-					addLine();
-					isInLine = true;
-					isInLineStatuses = false;
- 				}			
-			
+					add_line();
+					is_in_line = true;
+					is_in_line_statuses = false;
+ 				}
+
 			} else if (field == ID) {
-				setId((char *)value);
+				set_id((char *)value);
 			} else if (field == NAME) {
-				setName((char *)value);
+				set_name((char *)value);
 			} else if (field == STATUSSEVERITYDESCRIPTION) {
-				setStatusSeverityDescription((char *)value);
+				set_status_severity_description((char *)value);
 			} else if (field == REASON) {
 				if (value != NULL) {
-					setReason((char *)value);
+					set_reason((char *)value);
 				}
 			}
-		} 
+		}
 			break;
 	}
 }
 
-void json_parse_array(struct json_object *jobj, char *key) {
- 	//printf(">>> json_parse_array\n"); 
+void json_parse_array(struct json_object * jobj, char * key) {
+ 	//printf(">>> json_parse_array\n");
 
 	enum json_type type;
 
@@ -98,16 +98,16 @@ void json_parse_array(struct json_object *jobj, char *key) {
 		struct json_object *o = NULL;
     	if (json_object_object_get_ex(jobj, key, &o)) {  /* getting the array if it is a key value pair */
 			jarray = o;
-		}  	
-	}	
+		}
+	}
 
-  	int arraylen = json_object_array_length(jarray); /* getting the length of the array */
+  int array_len = json_object_array_length(jarray); /* getting the length of the array */
   	//printf("Array Length: %d\n", arraylen);
-  
+
 	int i;
   	struct json_object *jvalue;
 
-  	for (i=0; i< arraylen; i++) {
+  	for (i=0; i< array_len; i++) {
     	jvalue = json_object_array_get_idx(jarray, i); /* getting the array element at position i */
     	type = json_object_get_type(jvalue);
 
@@ -117,16 +117,16 @@ void json_parse_array(struct json_object *jobj, char *key) {
     	} else if (type != json_type_object) {
 	     	//printf("value[%d]: ", i);
     	  	print_json_value(jvalue);
-    	
+
 		} else {
 			json_parse(jvalue);
-  		}	
-  	}	
+  		}
+  	}
 }
 
 /* parsing the json object */
-void json_parse(struct json_object *jobj) {
-	//printf(">>> json_parse\n");	
+void json_parse(struct json_object * jobj) {
+	//printf(">>> json_parse\n");
 
 	enum json_type type = json_object_get_type(jobj); /* getting the type of the json object */
     //printf("type: %u\n", type);
@@ -134,7 +134,7 @@ void json_parse(struct json_object *jobj) {
 	if (type == json_type_array) {
 		json_parse_array(jobj, NULL);
 		return;
-	
+
 	} else if (type != json_type_object) {
 		return;
 	}
@@ -142,19 +142,19 @@ void json_parse(struct json_object *jobj) {
 	json_object_object_foreach(jobj, key, val) { /* passing through every array element */
 		//printf("Key is [%s] %d\n", key, (val == NULL));
 
-		stateUpdate(key);
+		state_update(key);
 
 		type = json_object_get_type(val);
     	switch (type) {
 			case json_type_null:
 				break;
 
-      		case json_type_boolean: 
-      		case json_type_double: 
-      		case json_type_int: 
-      		case json_type_string: 
+      		case json_type_boolean:
+      		case json_type_double:
+      		case json_type_int:
+      		case json_type_string:
 				print_json_value(val);
-            	break; 
+            	break;
 
       		case json_type_object:
 			{
@@ -169,34 +169,33 @@ void json_parse(struct json_object *jobj) {
             	json_parse_array(jobj, key);
             	break;
     	}
-	}	
+	}
 }
 
 /* state machine */
-void stateUpdate(char *key) {
+void state_update(char * key) {
 	field = SKIP;
 
 	if (strncmp("$type", key, strlen(key)) == 0) {
 		field = TYPE;
 	}
 
-	if (isInLine == true && isInLineStatuses == false) {
+	if (is_in_line == true && is_in_line_statuses == false) {
 		if (strncmp("id", key, strlen(key)) == 0) {
-			field = ID;	
+			field = ID;
 		} else if (strncmp("name", key, strlen(key)) == 0) {
 			field = NAME;
 		} else if (strncmp("lineStatuses", key, strlen(key)) == 0) {
-			isInLineStatuses = true;
+			is_in_line_statuses = true;
 		}
-	
-	} else if (isInLine == true && isInLineStatuses == true) { 
+
+	} else if (is_in_line == true && is_in_line_statuses == true) {
 		if (strncmp("statusSeverity", key, strlen(key)) == 0) {
              field = STATUSSEVERITY;
          } else if (strncmp("statusSeverityDescription", key, strlen(key)) == 0) {
              field = STATUSSEVERITYDESCRIPTION;
          } else if (strncmp("reason", key, strlen(key)) == 0) {
              field = REASON;
-       }	
+       }
 	}
 }
-

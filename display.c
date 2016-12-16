@@ -28,18 +28,18 @@
 #define KLINENAMEWIDTH	20
 
 /* forward declaration */
-char *centerStr(char *str);
-char *repeatStr(char *str, size_t count);
-void str_replace(char *target, const char *needle, const char *replacement);
-void convertToUpperCase(char *str);
+char *center_string(char *str);
+char *repeat_string(char *str, size_t count);
+void string_replace(char *target, const char *needle, const char *replacement);
+void convert_to_uppercase(char *str);
 
-void displayDateTime() {
-	printf("\n"); /* add blank header line for additional spacing */ 
+void display_date_time() {
+	printf("\n"); /* add blank header line for additional spacing */
 
 	time_t timer;
 	char buffer[26];
 	struct tm* tm_info;
-	
+
 	time(&timer);
 	tm_info = localtime(&timer);
 
@@ -47,12 +47,12 @@ void displayDateTime() {
 	puts(buffer);
 }
 
-void displayLineStatus(struct line_st *line) {
+void display_line_status(struct line_st *line) {
 	char *id = line->id;
-	char *name = centerStr(line->name);
+	char *name = center_string(line->name);
 
 	if (strncmp("bakerloo", id, strlen(id)) == 0) {
-		printf(KBAKERLOO "%s" KRESET, name);    
+		printf(KBAKERLOO "%s" KRESET, name);
 	} else if (strncmp("central", id, strlen(id)) == 0) {
 		printf(KCENTRAL "%s" KRESET, name);
  	} else if (strncmp("circle", id, strlen(id)) == 0) {
@@ -74,14 +74,14 @@ void displayLineStatus(struct line_st *line) {
 	} else if (strncmp("waterloo-city", id, strlen(id)) == 0) {
 		printf(KWATERLOO "%s" KRESET, name);
 	} else {
-		printf("%s", name);	
+		printf("%s", name);
 	}
-	
-	if (line->statusSeverity != 10) { /* 10 = Good Service */
-		printf(KRED "\t%s" KRESET, line->statusSeverityDescription);
+
+	if (line->status_severity != 10) { /* 10 = Good Service */
+		printf(KRED "\t%s" KRESET, line->status_severity_description);
 		printf("\n");
 	} else {
-		printf("\t%s\n", line->statusSeverityDescription);
+		printf("\t%s\n", line->status_severity_description);
 	}
 
 	/* remove mention of the line in the reason to make it shorter */
@@ -93,50 +93,49 @@ void displayLineStatus(struct line_st *line) {
 		strcat(needle, suffix);
 
 		char *original = line->reason;
-		str_replace(original, needle, "");  
-		
-		/* upper case */
-		convertToUpperCase(needle);		
-		str_replace(original, needle, "");
+		string_replace(original, needle, "");
 
-		char *emptyStr = repeatStr(" ", KLINENAMEWIDTH);
-		printf(KREASON "\%s\t%s" KRESET, emptyStr, original);
+		/* upper case */
+		convert_to_uppercase(needle);
+		string_replace(original, needle, "");
+
+		char *empty_string = repeat_string(" ", KLINENAMEWIDTH);
+		printf(KREASON "\%s\t%s" KRESET, empty_string, original);
 		printf("\n");
 	}
 }
 
-char *centerStr(char *str) {
-	int strLength = strlen(str);
-	int availableSpace = KLINENAMEWIDTH - strLength;
-	int leftPadding = 0;
-	int rightPadding = 0;
-	if (availableSpace < 0) {
-		availableSpace = 0;
-	
+char *center_string(char *str) {
+	int str_length = strlen(str);
+	int available_space = KLINENAMEWIDTH - str_length;
+	int left_padding = 0;
+	int right_padding = 0;
+	if (available_space < 0) {
+		available_space = 0;
+
 	} else {
-		int m = availableSpace % 2;
+		int m = available_space % 2;
 		if (m == 0 ) {
-			leftPadding = availableSpace/2;
-			rightPadding = leftPadding;	
+			left_padding = available_space/2;
+			right_padding = left_padding;
 		} else {
-			leftPadding = availableSpace/2;
-			rightPadding = availableSpace - leftPadding;	
+			left_padding = available_space/2;
+			right_padding = available_space - left_padding;
 		}
 	}
-	
-	char *padding = " ";
-	char *leftString = repeatStr(padding, leftPadding);
-	char *rightString = repeatStr(padding, rightPadding);
 
-	char *final = (char *) malloc(1 + KLINENAMEWIDTH); 
-   	strcpy(final, leftString);
+	char *leftString = repeat_string(" ", left_padding);
+	char *rightString = repeat_string(" ", right_padding);
+
+	char *final = (char *) malloc(1 + KLINENAMEWIDTH);
+	strcpy(final, leftString);
 	strcat(final, str);
 	strcat(final, rightString);
 
 	return final;
 }
 
-char *repeatStr(char *str, size_t count) {
+char *repeat_string(char *str, size_t count) {
     if (count == 0) return NULL;
     char *ret = malloc (strlen(str) * count + count);
     if (ret == NULL) return NULL;
@@ -148,7 +147,7 @@ char *repeatStr(char *str, size_t count) {
     return ret;
 }
 
-void str_replace(char *target, const char *needle, const char *replacement) {
+void string_replace(char *target, const char *needle, const char *replacement) {
 	char buffer[2048] = { 0 };
 	char *insert_point = &buffer[0];
 	const char *tmp = target;
@@ -180,7 +179,7 @@ void str_replace(char *target, const char *needle, const char *replacement) {
 	strcpy(target, buffer);
 }
 
-void convertToUpperCase(char *str) {
+void convert_to_uppercase(char *str) {
 	while (*str != '\0') {
 		if (islower(*str))
 			*str = toupper((unsigned char) *str);

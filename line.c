@@ -6,32 +6,32 @@
 /* application includes */
 #include "line.h"
 
-int currentLine = -1;
+int current_line = -1;
 
-void addLine() {
-	currentLine++;
+void add_line() {
+	current_line++;
 }
 
-void setId(char *id) {
-	lines[currentLine].id = (char*)malloc(strlen(id) + 1 * sizeof(char));
-	strcpy(lines[currentLine].id, id);
+void set_id(char * id) {
+	lines[current_line].id = (char*)malloc(strlen(id) + 1 * sizeof(char));
+	strcpy(lines[current_line].id, id);
 }
 
-void setName(char *name) {
-	lines[currentLine].name= (char*)malloc(strlen(name) + 1 * sizeof(char));
-	strcpy(lines[currentLine].name, name);
+void set_name(char * name) {
+	lines[current_line].name= (char*)malloc(strlen(name) + 1 * sizeof(char));
+	strcpy(lines[current_line].name, name);
 }
 
-void setStatusSeverity(int statusSeverity) {
-	lines[currentLine].statusSeverity = statusSeverity;
+void set_status_severity(int status_severity) {
+	lines[current_line].status_severity = status_severity;
 }
 
-void setStatusSeverityDescription(char *statusSeverityDescription) {
-	lines[currentLine].statusSeverityDescription = (char*)malloc(strlen(statusSeverityDescription) + 1 * sizeof(char));
-	strcpy(lines[currentLine].statusSeverityDescription, statusSeverityDescription);
+void set_status_severity_description(char * status_severity_description) {
+	lines[current_line].status_severity_description = (char*)malloc(strlen(status_severity_description) + 1 * sizeof(char));
+	strcpy(lines[current_line].status_severity_description, status_severity_description);
 }
 
-void setReason(char *reason) {
-	lines[currentLine].reason = (char*)malloc(strlen(reason) + 1 * sizeof(char));
-	strcpy(lines[currentLine].reason, reason);
+void set_reason(char * reason) {
+	lines[current_line].reason = (char*)malloc(strlen(reason) + 1 * sizeof(char));
+	strcpy(lines[current_line].reason, reason);
 }

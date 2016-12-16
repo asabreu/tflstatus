@@ -1,3 +1,6 @@
+#ifndef LINE_H
+#define LINE_H
+
 /* standard includes */
 #include <stdio.h>
 #include <string.h>
@@ -6,19 +9,21 @@
 
 /* holder for line info */
 struct line_st {
-	char *id;
-	char *name;
-	int statusSeverity;
-	char *statusSeverityDescription;
-	char *reason;
+	char * id;
+	char * name;
+	int status_severity;
+	char * status_severity_description;
+	char * reason;
 };
 
 /* holder of lines */
 struct line_st lines[KNUMBEROFLINES];
 
-void addLine();
-void setId(char *id);
-void setName(char *name);
-void setStatusSeverity(int statusSeverity);
-void setStatusSeverityDescription(char *statusSeverityDescription);
-void setReason(char *reason);
+void add_line();
+void set_id(char * id);
+void set_name(char * name);
+void set_status_severity(int status_severity);
+void set_status_severity_description(char * status_severity_description);
+void set_reason(char * reason);
+
+#endif

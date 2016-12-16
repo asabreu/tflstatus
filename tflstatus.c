@@ -1,5 +1,5 @@
 /**
- * An application to retrieve tube status from TFL and display the output in the UNIX terminal 
+ * An application to retrieve tube status from TFL and display the output in the UNIX terminal
  *
  * Requirements:
  *
@@ -13,7 +13,7 @@
  * Run:
  *
  * ./tflstatus
- * 
+ *
  */
 
 /* standard includes */
@@ -28,14 +28,14 @@
 #include "display.h"
 
 /* json-c (https://github.com/json-c/json-c) */
-#include <json.h> 
+#include <json.h>
 
 /* libcurl (http://curl.haxx.se/libcurl/c) */
 #include <curl/curl.h>
 
 const char *VERSION = "1.0";
 
-int isCmdValid(char *cmd) {
+int is_cmd_valid(char *cmd) {
 	if (strncmp("--help", cmd, strlen(cmd)) == 0 || strncmp("help", cmd, strlen(cmd)) == 0) {
 		return 1;
 	}
@@ -48,20 +48,22 @@ int main(int argc, char *argv[]) {
 	if (argc != 1) {
 		if (argc != 2) {
 			int i;
-    		printf("tflstatus: The following are not valid commands. See 'tflstatus --help'.\n");
-    		for (i = 1; i < argc; i++) {
+    	printf("tflstatus: The following are not valid commands. See 'tflstatus --help'.\n");
+  		for (i = 1; i < argc; i++) {
 				char *cmd = argv[i];
-				if (!isCmdValid(cmd))
-					printf("'%s' ", argv[i]);
+				if (!is_cmd_valid(cmd)) printf("'%s' ", argv[i]);
 			}
+
 			printf("\n");
-		
+
 		} else {
 			char *cmd = argv[1];
-			if (isCmdValid(cmd)) {
+			if (is_cmd_valid(cmd)) {
 				printf("usage: %s [--version]\n", argv[0]);
+
 			} else if (strncmp("--version", cmd, strlen(cmd)) == 0) {
 				printf("%s version %s\n", argv[0], VERSION);
+
 			} else {
 				printf("tflstatus: '%s' is not a tflstatus command. See 'tflstatus --help'.\n", cmd);
 				printf("usage: %s [--version]\n", argv[0]);
@@ -69,7 +71,7 @@ int main(int argc, char *argv[]) {
 		}
 
 		return 0;
-    }
+	}
 
     CURL *ch;                                               /* curl handle */
     CURLcode rcode;                                         /* curl result code */
@@ -152,16 +154,16 @@ int main(int argc, char *argv[]) {
 	/* parse */
 	json_parse(json);
 
-	/* display */
-	displayDateTime();
-	
-	int l;
-	for	(l = 0; l < KNUMBEROFLINES; l++) {
-		displayLineStatus(&lines[l]);	
+	/* display date time */
+	display_date_time();
+
+	/* display line status */
+	for	(int l = 0; l < KNUMBEROFLINES; l++) {
+		display_line_status(&lines[l]);
 	}
 	
 	printf("\n"); /* add blank footer line for additional spacing */
 
-    /* exit */
-    return 0;
+	/* exit */
+	return 0;
 }

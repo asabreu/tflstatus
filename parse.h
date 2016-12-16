@@ -1,3 +1,6 @@
+#ifndef PARSE_H
+#define PARSE_H
+
 /* standard includes */
 #include <stdio.h>
  
@@ -6,3 +9,5 @@
 
 /* parsing the json object */
 void json_parse(struct json_object * jobj);
+
+#endif
