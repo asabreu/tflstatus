@@ -24,8 +24,9 @@ Features
 Tested Environments
 -------------------
 
+* Free BSD
 * GNU Linux
-* MacOSX
+* macOS X
 * Raspberry Pi
 
 If you have successfully tested this application on others systems or platforms please let me know!
@@ -45,13 +46,21 @@ If build was successful, you should get a `tflstatus` binary.
 
 The configured Makefile requires the system has installed `pkgconfig`.
 
-#### Install pkg-config on Mac OSX with `brew`
+#### Install pkg-config on macOS X with `Homebrew`
 
 ```
 brew install pkg-config
 ```
 
 #### Installation of development packages for `cURL` and `libjson-c` 
+
+**macOS X with `Homebrew`:**
+
+```
+bash
+    brew instal curl
+    brew instal json-c
+```
 
 **Debian & Ubuntu Linux:**
 
