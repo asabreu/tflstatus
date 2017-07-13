@@ -1,5 +1,5 @@
-CFLAGS+=$(shell pkg-config --cflags json)
-LDFLAGS+=$(shell pkg-config --libs json)
+CFLAGS+=$(shell pkg-config --cflags json-c)
+LDFLAGS+=$(shell pkg-config --libs json-c)
 
 CFLAGS+=-Wall -Werror -std=gnu99 -O2 
 LDFLAGS+=`curl-config --libs`
