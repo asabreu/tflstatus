@@ -44,7 +44,7 @@ To build the application, run `make`.
 
 If build was successful, you should get a `tflstatus` binary.
 
-#### Linking to `cURL` and `libjson-c`
+#### Linking to `cURL` and `json-c`
 
 The configured Makefile requires the system has installed `pkgconfig`.
 
@@ -54,7 +54,7 @@ The configured Makefile requires the system has installed `pkgconfig`.
 brew install pkg-config
 ```
 
-#### Installation of development packages for `cURL` and `libjson-c` 
+#### Installation of development packages for `cURL` and `json-c` 
 
 **macOS X with `Homebrew`:**
 
@@ -68,9 +68,10 @@ bash
 
 ```
 bash
-    sudo apt-get install libcurl4-gnutls-dev
-    sudo apt-get install libjson0 libjson0-dev
+    sudo apt-get install libcurl4-gnutls-dev    
 ```
+
+For `json-c` follow the provided [build instructions](https://github.com/json-c/json-c#build-instructions) to build from source.
 
 Usage
 -----
