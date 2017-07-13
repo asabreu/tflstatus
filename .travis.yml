@@ -6,6 +6,7 @@ before_script:
   - dpkg -L libjson0 libjson0-dev libcurl4-gnutls-dev
   - export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
   - echo $(pkg-config --variable pc_path pkg-config)${PKG_CONFIG_PATH:+:}${PKG_CONFIG_PATH}
+  - pkg-config --list-all
 language: c
 compiler: gcc
 script: make
