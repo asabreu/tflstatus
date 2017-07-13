@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/asabreu/tflstatus.svg?branch=master)](https://travis-ci.org/asabreu/tflstatus)
+
 # tflstatus
 
 An application to retrieve [tube status][tfl] from TFL and display the output in the UNIX terminal.
