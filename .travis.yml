@@ -1,16 +1,10 @@
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y libcurl4-gnutls-dev
-  - sudo apt-get install -y libjson0 libjson0-dev
-  - sudo apt-cache search json-c
+  - sudo apt-get install -y libcurl4-gnutls-dev 
   - sudo chmod 755 install-json-c.sh
-  - ls -lisa
   - sudo ./install-json-c.sh
 before_script:
-  - dpkg -L libjson0 libjson0-dev libcurl4-gnutls-dev
   - export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
-  - echo $(pkg-config --variable pc_path pkg-config)${PKG_CONFIG_PATH:+:}${PKG_CONFIG_PATH}
-  - pkg-config --list-all
 language: c
 compiler: gcc
 script: make
