@@ -1,3 +1,4 @@
+![C/C++ CI](https://github.com/asabreu/tflstatus/workflows/C/C++%20CI/badge.svg)
 
 # tflstatus
 
